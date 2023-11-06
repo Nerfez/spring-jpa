@@ -1,6 +1,6 @@
-package fr.diginamic.datajpa.repository;
-import fr.diginamic.datajpa.model.Animal;
-import fr.diginamic.datajpa.model.Species;
+package fr.iocean.species.repository;
+import fr.iocean.species.model.Animal;
+import fr.iocean.species.model.Species;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,9 +14,9 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
     List<Animal> findAll();
 
-    Optional<Animal> findById(Long id);
+    Optional<Animal> findById(Integer id);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 
     List<Animal> findBySpecies(Species species);
 

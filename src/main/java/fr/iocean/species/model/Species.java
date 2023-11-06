@@ -1,12 +1,12 @@
-package fr.diginamic.datajpa.model;
+package fr.iocean.species.model;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "species")
 public class Species {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "common_name")
     private String commonName;
@@ -21,11 +21,22 @@ public class Species {
 
     public Species(){}
 
-    public Long getId() {
+    @OneToMany(mappedBy = "species")
+    private List<Animal> animals;
+
+    public List<Animal> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(List<Animal> animals) {
+        this.animals = animals;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

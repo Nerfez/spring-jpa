@@ -1,15 +1,14 @@
-package fr.diginamic.datajpa.model;
-import fr.diginamic.datajpa.enums.Sex;
-import jakarta.persistence.*;
+package fr.iocean.species.model;
+import fr.iocean.species.enums.Sex;
 
-import java.util.Set;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "animal")
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "color")
     private String color;
@@ -24,8 +23,13 @@ public class Animal {
     @JoinColumn(name = "species_id")
     private Species species;
 
-    @ManyToMany(mappedBy = "animals")
-    private Set<Person> owners;
+    @ManyToMany
+    @JoinTable(
+            name = "person_animals",
+            joinColumns = @JoinColumn(name = "animals_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private List<Person> owner;
 
     public Animal(String couleur, String nom, Sex sexe, Species species) {
         this.color = couleur;
@@ -36,12 +40,12 @@ public class Animal {
 
     public Animal(){}
 
-    public Set<Person> getOwners() {
-        return owners;
+    public List<Person> getOwner() {
+        return owner;
     }
 
-    public void setOwners(Set<Person> owners) {
-        this.owners = owners;
+    public void setOwner(List<Person> owner) {
+        this.owner = owner;
     }
 
     public Sex getSex() {
@@ -52,11 +56,11 @@ public class Animal {
         this.sex = sex;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

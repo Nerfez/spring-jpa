@@ -1,16 +1,14 @@
-package fr.diginamic.datajpa.model;
+package fr.iocean.species.model;
 
-import fr.diginamic.datajpa.enums.Sex;
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
-@Table(name = "person")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "age")
     private Integer age;
@@ -22,10 +20,13 @@ public class Person {
     private String lastname;
 
     @ManyToMany
-    @JoinTable(name = "person_animals",
+    @JoinTable(
+            name = "person_animals",
             joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "animals_id"))
-    private Set<Animal> animals;
+            inverseJoinColumns = @JoinColumn(name = "animals_id")
+    )
+    private List<Animal> animals;
+
 
     public Person(Integer age, String prenom, String nom) {
         this.age = age;
@@ -33,29 +34,29 @@ public class Person {
         this.lastname = nom;
     }
 
-    public Set<Animal> getAnimals() {
+    public List<Animal> getAnimals() {
         return animals;
     }
 
-    public void setAnimals(Set<Animal> animals) {
+    public void setAnimals(List<Animal> animals) {
         this.animals = animals;
     }
 
     public Person(){}
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

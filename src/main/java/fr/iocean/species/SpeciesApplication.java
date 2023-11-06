@@ -1,20 +1,22 @@
-package fr.diginamic.datajpa;
+package fr.iocean.species;
 
-import fr.diginamic.datajpa.enums.Sex;
-import fr.diginamic.datajpa.model.*;
-import fr.diginamic.datajpa.repository.AnimalRepository;
-import fr.diginamic.datajpa.repository.PersonRepository;
-import fr.diginamic.datajpa.repository.SpeciesRepository;
+import fr.iocean.species.enums.Sex;
+import fr.iocean.species.model.Animal;
+import fr.iocean.species.model.Person;
+import fr.iocean.species.repository.AnimalRepository;
+import fr.iocean.species.repository.PersonRepository;
+import fr.iocean.species.repository.SpeciesRepository;
+import fr.iocean.species.model.Species;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "fr.iocean.species")
 public class SpeciesApplication implements CommandLineRunner {
 
     @Autowired
@@ -33,21 +35,6 @@ public class SpeciesApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        // exemples utilisés du dump (1,'Chat','Felis silvestris catus'),(2,'Chien','Canis lupus familiaris')
-        Species newSpecies1 = new Species("Chat", "Felis silvestris catus");
-        Species newSpecies2 = new Species("Chien", "Canis lupus familiaris");
-        Species newSpecies3 = new Species("Chat", "Nom random");
-        this.speciesRepository.save(newSpecies1);
-        this.speciesRepository.save(newSpecies2);
-        this.speciesRepository.save(newSpecies3);
-
-        Person newPerson1 = new Person(22,"Henri","Lamarque");
-        Person newPerson2 = new Person(24,"Sylvie","Lamarque");
-        Person newPerson3 = new Person(55,"Jean","Vintroi");
-        this.personRepository.save(newPerson1);
-        this.personRepository.save(newPerson2);
-        this.personRepository.save(newPerson3);
-
         //**********************************   TP - 03  **********************************
 
         // 1. Afficher la liste des entités avec findAll
@@ -58,10 +45,10 @@ public class SpeciesApplication implements CommandLineRunner {
         }
 
         // 2. À l’aide de notre repository, créer quelques entités avec la méthode save
-        Animal newAnimal1=  new Animal("Gris tacheté", "Félix", Sex.MALE, newSpecies1);
+        Animal newAnimal1=  new Animal("Gris tacheté", "Félix", Sex.M, speciesRepository.findById(1).get());
         this.animalRepository.save(newAnimal1);
 
-        Animal newAnimal2 = new Animal("Blanc", "Médor", Sex.MALE, newSpecies2);
+        Animal newAnimal2 = new Animal("Blanc", "Médor", Sex.F, speciesRepository.findById(2).get());
         this.animalRepository.save(newAnimal2);
 
         // 3. Rechercher une entité par son id avec findById
@@ -206,6 +193,32 @@ public class SpeciesApplication implements CommandLineRunner {
             System.out.println("Aucune espèce trouvée avec le nom commun contenant : " + commonNameToSearch);
         }
         //********************************** FIN  TP - 05 - 1 **********************************
+
+        //**********************************  TP - 05 - 2 **********************************
+        //Methode findPeopleByAgeRange
+        List<Person> peopleInRange = personRepository.findPeopleByAgeRange(20, 40);
+
+        if (!peopleInRange.isEmpty()) {
+            System.out.println("Liste de personnes dont l'âge est compris entre 20 et 40 :");
+            for (Person personFounded : peopleInRange) {
+                System.out.println("Prenom : " + personFounded.getFirstname() + " Nom : " + personFounded.getLastname());
+            }
+        } else {
+            System.out.println("Aucune personne trouvée.");
+        }
+
+        //Methode findPeopleWithAnimal
+        List<Person> peopleWithAnimal = personRepository.findPeopleWithAnimal(newAnimal1);
+
+        if (!peopleWithAnimal.isEmpty()) {
+            System.out.println("Personnes dont le nom qui possède l'animal 1 :");
+            for (Person person : peopleWithAnimal) {
+                System.out.println("Prenom : " + person.getFirstname() + " Nom : " + person.getLastname());
+            }
+        } else {
+            System.out.println("Aucune personne trouvée contenant l'animal : " + newAnimal1.getName());
+        }
+        //********************************** FIN  TP - 05 - 2 **********************************
 
     }
 }

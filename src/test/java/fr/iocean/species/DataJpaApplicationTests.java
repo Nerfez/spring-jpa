@@ -1,4 +1,4 @@
-package fr.diginamic.datajpa;
+package fr.iocean.species;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
