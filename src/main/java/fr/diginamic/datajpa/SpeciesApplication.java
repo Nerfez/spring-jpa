@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -48,6 +49,7 @@ public class SpeciesApplication implements CommandLineRunner {
         this.personRepository.save(newPerson2);
         this.personRepository.save(newPerson3);
 
+        //**********************************   TP - 03  **********************************
 
         // 1. Afficher la liste des entités avec findAll
         List<Animal> allAnimals = this.animalRepository.findAll();
@@ -80,12 +82,103 @@ public class SpeciesApplication implements CommandLineRunner {
         for (Animal animal : allAnimals) {
             System.out.println(animal);
         }
+        //**********************************   FIN TP - 03  **********************************
 
-        //TP - 04 utiliser le nom des méthodes
-        List<Animal> allAnimalsBySpecies = this.animalRepository.findBySpecies(newSpecies1);
-        System.out.println("Liste de tous les animaux par especes (Chat) : ");
-        for (Animal animal : allAnimalsBySpecies) {
-            System.out.println(animal);
+
+        //**********************************   TP - 04 - 1 - Species **********************************
+        //METHODE findFirstByCommonName
+        String commonNameToSearch = "NomCommunRecherche";
+        Species species = speciesRepository.findFirstByCommonName(commonNameToSearch);
+
+        if (species != null) {
+            System.out.println("Espèce trouvée : " + species.getCommonName());
+        } else {
+            System.out.println("Aucune espèce trouvée avec le nom commun : " + commonNameToSearch);
         }
+
+        //METHODE findByLatinNameIgnoreCaseContaining
+        String latinNameToSearch = "NomLatinRecherche";
+        List<Species> matchingSpecies = speciesRepository.findByLatinNameIgnoreCaseContaining(latinNameToSearch);
+
+        if (!matchingSpecies.isEmpty()) {
+            System.out.println("Espèces correspondantes trouvées :");
+            for (Species species1 : matchingSpecies) {
+                System.out.println(species1.getLatinName());
+            }
+        } else {
+            System.out.println("Aucune espèce trouvée avec le nom latin correspondant : " + latinNameToSearch);
+        }
+        //********************************** FIN  TP - 04 - 1 **********************************
+
+
+
+        //********************************** TP - 04 - 2 - Person **********************************
+        //METHODE findByLastNameOrFirstName
+
+        String lastNameToSearch = "NomRecherche";
+        String firstNameToSearch = "PrenomRecherche";
+
+        List<Person> matchingPeople = personRepository.findByLastNameOrFirstName(lastNameToSearch, firstNameToSearch);
+
+        if (!matchingPeople.isEmpty()) {
+            System.out.println("Personnes correspondantes trouvées :");
+            for (Person person : matchingPeople) {
+                System.out.println(person.getLastname() + " " + person.getFirstname());
+            }
+        } else {
+            System.out.println("Aucune personne trouvée avec le nom de famille ou le prénom correspondant : " + lastNameToSearch + " " + firstNameToSearch);
+        }
+
+        //METHODE findByAgeGreaterThanEqual
+        int ageToSearch = 30;
+
+        List<Person> olderPeople = personRepository.findByAgeGreaterThanEqual(ageToSearch);
+
+        if (!olderPeople.isEmpty()) {
+            System.out.println("Personnes plus âgées ou égales trouvées :");
+            for (Person person : olderPeople) {
+                System.out.println(person.getLastname() + " " + person.getFirstname() + " - Âge : " + person.getAge());
+            }
+        } else {
+            System.out.println("Aucune personne trouvée avec l'âge supérieur ou égal à : " + ageToSearch);
+        }
+        //********************************** FIN  TP - 04 - 2 **********************************
+
+
+        //********************************** TP - 04 - 3 - Animal **********************************
+        //METHODE findBySpecies
+        Species speciesToSearch = speciesRepository.findById(1L).orElse(null);
+
+        if (speciesToSearch != null) {
+            List<Animal> animalsOfSpecies = animalRepository.findBySpecies(speciesToSearch);
+
+            if (!animalsOfSpecies.isEmpty()) {
+                System.out.println("Animaux de l'espèce trouvés :");
+                for (Animal animal : animalsOfSpecies) {
+                    System.out.println(animal.getName() + " - Espèce : " + animal.getSpecies().getCommonName());
+                }
+            } else {
+                System.out.println("Aucun animal trouvé pour l'espèce : " + speciesToSearch.getCommonName());
+            }
+        } else {
+            System.out.println("L'espèce spécifiée n'a pas été trouvée.");
+        }
+
+        //METHODE findByColorIn
+        List<String> colorsToSearch = Arrays.asList("Blanc", "Noir");
+
+        List<Animal> animalsWithColors = animalRepository.findByColorIn(colorsToSearch);
+
+        if (!animalsWithColors.isEmpty()) {
+            System.out.println("Animaux avec les couleurs spécifiées trouvés :");
+            for (Animal animal : animalsWithColors) {
+                System.out.println(animal.getName() + " - Couleur : " + animal.getColor());
+            }
+        } else {
+            System.out.println("Aucun animal trouvé avec les couleurs spécifiées : " + colorsToSearch);
+        }
+
+        //********************************** FIN  TP - 04 - 3 **********************************
+
     }
 }
