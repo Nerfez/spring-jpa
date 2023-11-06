@@ -15,4 +15,9 @@ public interface SpeciesRepository extends JpaRepository<Species, Long> {
     Optional<Species> findById(Long id);
 
     void deleteById(Long id);
+
+    Species findFirstByCommonName(String commonName);
+
+    List<Species> findByLatinNameIgnoreCaseContaining(String latinName);
+
 }

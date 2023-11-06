@@ -14,8 +14,7 @@ public class Species {
     @Column(name = "latin_name")
     private String latinName;
 
-    public Species(Long id, String commonName, String latinName) {
-        this.id = id;
+    public Species(String commonName, String latinName) {
         this.commonName = commonName;
         this.latinName = latinName;
     }

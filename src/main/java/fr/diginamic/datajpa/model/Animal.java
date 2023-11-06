@@ -2,6 +2,8 @@ package fr.diginamic.datajpa.model;
 import fr.diginamic.datajpa.enums.Sex;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "animal")
 public class Animal {
@@ -22,13 +24,25 @@ public class Animal {
     @JoinColumn(name = "species_id")
     private Species species;
 
-    public Animal(String couleur, String nom, Sex sexe) {
+    @ManyToMany(mappedBy = "animals")
+    private Set<Person> owners;
+
+    public Animal(String couleur, String nom, Sex sexe, Species species) {
         this.color = couleur;
         this.name = nom;
         this.sex = sexe;
+        this.species = species;
     }
 
     public Animal(){}
+
+    public Set<Person> getOwners() {
+        return owners;
+    }
+
+    public void setOwners(Set<Person> owners) {
+        this.owners = owners;
+    }
 
     public Sex getSex() {
         return sex;

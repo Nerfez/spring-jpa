@@ -3,6 +3,8 @@ package fr.diginamic.datajpa.model;
 import fr.diginamic.datajpa.enums.Sex;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "person")
 public class Person {
@@ -19,10 +21,24 @@ public class Person {
     @Column(name = "lastname")
     private String lastname;
 
+    @ManyToMany
+    @JoinTable(name = "person_animals",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "animals_id"))
+    private Set<Animal> animals;
+
     public Person(Integer age, String prenom, String nom) {
         this.age = age;
         this.firstname = prenom;
         this.lastname = nom;
+    }
+
+    public Set<Animal> getAnimals() {
+        return animals;
+    }
+
+    public void setAnimals(Set<Animal> animals) {
+        this.animals = animals;
     }
 
     public Person(){}
