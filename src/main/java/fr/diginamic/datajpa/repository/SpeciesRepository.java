@@ -20,4 +20,7 @@ public interface SpeciesRepository extends JpaRepository<Species, Long> {
 
     List<Species> findByLatinNameIgnoreCaseContaining(String latinName);
 
+    List<Species> findAllByOrderByCommonNameAsc();
+
+    List<Species> findByCommonNameContainingIgnoreCase(String commonName);
 }

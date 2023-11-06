@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @SpringBootApplication
 public class SpeciesApplication implements CommandLineRunner {
@@ -87,7 +86,7 @@ public class SpeciesApplication implements CommandLineRunner {
 
         //**********************************   TP - 04 - 1 - Species **********************************
         //METHODE findFirstByCommonName
-        String commonNameToSearch = "NomCommunRecherche";
+        String commonNameToSearch = "Chien";
         Species species = speciesRepository.findFirstByCommonName(commonNameToSearch);
 
         if (species != null) {
@@ -97,7 +96,7 @@ public class SpeciesApplication implements CommandLineRunner {
         }
 
         //METHODE findByLatinNameIgnoreCaseContaining
-        String latinNameToSearch = "NomLatinRecherche";
+        String latinNameToSearch = "Chien";
         List<Species> matchingSpecies = speciesRepository.findByLatinNameIgnoreCaseContaining(latinNameToSearch);
 
         if (!matchingSpecies.isEmpty()) {
@@ -165,7 +164,7 @@ public class SpeciesApplication implements CommandLineRunner {
         }
 
         //METHODE findByColorIn
-        List<String> colorsToSearch = Arrays.asList("Blanc", "Noir");
+        List<String> colorsToSearch = Arrays.asList("Blanc", "Gris tacheté");
 
         List<Animal> animalsWithColors = animalRepository.findByColorIn(colorsToSearch);
 
@@ -179,6 +178,34 @@ public class SpeciesApplication implements CommandLineRunner {
         }
 
         //********************************** FIN  TP - 04 - 3 **********************************
+
+        //**********************************  TP - 05 - 1 **********************************
+        //Methode findAllByOrderByCommonNameAsc
+        List<Species> speciesList = speciesRepository.findAllByOrderByCommonNameAsc();
+
+        if (!speciesList.isEmpty()) {
+            System.out.println("Liste d'espèces ordonnées par nom commun ascendant :");
+            for (Species speciesFound : speciesList) {
+                System.out.println("Nom commun : " + speciesFound.getCommonName() + " - Nom latin : " + speciesFound.getLatinName());
+            }
+        } else {
+            System.out.println("Aucune espèce trouvée.");
+        }
+
+        //Methode findByCommonNameContainingIgnoreCase
+        commonNameToSearch = "Chat";
+
+        matchingSpecies = speciesRepository.findByCommonNameContainingIgnoreCase(commonNameToSearch);
+
+        if (!matchingSpecies.isEmpty()) {
+            System.out.println("Espèces dont le nom commun contient la chaîne spécifiée (en ignorant la casse) :");
+            for (Species speciesFound2 : matchingSpecies) {
+                System.out.println("Nom commun : " + speciesFound2.getCommonName() + " - Nom latin : " + speciesFound2.getLatinName());
+            }
+        } else {
+            System.out.println("Aucune espèce trouvée avec le nom commun contenant : " + commonNameToSearch);
+        }
+        //********************************** FIN  TP - 05 - 1 **********************************
 
     }
 }
