@@ -237,5 +237,16 @@ public class SpeciesApplication implements CommandLineRunner {
         }
         //********************************** FIN  TP - 05 - 3 **********************************
 
+        //**********************************  TP - 05 - 1 **********************************
+        //Méthode deletePeopleWithoutAnimals
+        personRepository.deletePeopleWithoutAnimals();
+        //********************************** FIN  TP - 05 - 1 **********************************
+
+        //**********************************  TP - 05 - 2 **********************************
+        //Méthode generateRandomEntities
+        //Fonctionne correctement, on peut décommenter pour tester mais je l'ai mis en commentaire aussi pour éviter de push vers ma bdd a chaque lancement
+        //personRepository.generateRandomEntities(10);
+
+        //********************************** FIN  TP - 05 - 2 **********************************
     }
 }
