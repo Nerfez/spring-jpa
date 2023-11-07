@@ -45,14 +45,15 @@ public class SpeciesApplication implements CommandLineRunner {
         }
 
         // 2. À l’aide de notre repository, créer quelques entités avec la méthode save
-        Animal newAnimal1=  new Animal("Gris tacheté", "Félix", Sex.M, speciesRepository.findById(1).get());
-        this.animalRepository.save(newAnimal1);
+        //Ca fonctionne bien mais je pense en commentaire pour eviter de push une valeur a chaque lancement
+        //Animal newAnimal1=  new Animal("Gris tacheté", "Félix", Sex.M, speciesRepository.findById(1).get());
+        //this.animalRepository.save(newAnimal1);
 
         Animal newAnimal2 = new Animal("Blanc", "Médor", Sex.F, speciesRepository.findById(2).get());
         this.animalRepository.save(newAnimal2);
 
         // 3. Rechercher une entité par son id avec findById
-        Optional<Animal> retrievedAnimal = this.animalRepository.findById(newAnimal1.getId());
+        Optional<Animal> retrievedAnimal = this.animalRepository.findById(animalRepository.findById(1).orElse(null).getId());
         if (retrievedAnimal.isPresent()) {
             System.out.println("Animal trouvé par ID : " + retrievedAnimal.get());
         } else {
@@ -208,7 +209,7 @@ public class SpeciesApplication implements CommandLineRunner {
         }
 
         //Methode findPeopleWithAnimal
-        List<Person> peopleWithAnimal = personRepository.findPeopleWithAnimal(newAnimal1);
+        List<Person> peopleWithAnimal = personRepository.findPeopleWithAnimal(animalRepository.findById(1).orElse(null));
 
         if (!peopleWithAnimal.isEmpty()) {
             System.out.println("Personnes dont le nom qui possède l'animal 1 :");
@@ -216,9 +217,25 @@ public class SpeciesApplication implements CommandLineRunner {
                 System.out.println("Prenom : " + person.getFirstname() + " Nom : " + person.getLastname());
             }
         } else {
-            System.out.println("Aucune personne trouvée contenant l'animal : " + newAnimal1.getName());
+            System.out.println("Aucune personne trouvée contenant l'animal : " + animalRepository.findById(1).orElse(null).getName());
         }
         //********************************** FIN  TP - 05 - 2 **********************************
+
+        //**********************************  TP - 05 - 3 **********************************
+        //Methode countAnimalsBySex
+        Long animalsNumber = animalRepository.countAnimalsBySex(Sex.M);
+
+        System.out.println("Nombre d'animaux étant du sex Masculin :" + animalsNumber);
+
+        //Méthode doesAnimalBelongToAnyPerson
+        Animal animalToSearch = animalRepository.findById(2).orElse(null);
+        boolean isValid = animalRepository.doesAnimalBelongToAnyPerson(animalToSearch);
+        if(isValid) {
+            System.out.println("L'animal " + animalToSearch.getName() + " est lié à au moins 1 personne");
+        } else {
+            System.out.println("L'animal " + animalToSearch.getName() + " n'est lié à personne");
+        }
+        //********************************** FIN  TP - 05 - 3 **********************************
 
     }
 }
