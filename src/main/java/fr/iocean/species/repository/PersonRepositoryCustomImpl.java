@@ -19,14 +19,20 @@ public class PersonRepositoryCustomImpl implements PersonRepositoryCustom {
 
     @Override
     @Transactional
-    /**
-     * A cause de l'erreur SQL Error: 1093, SQLState: HY000
-     * ERROR 5652 --- [  restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : You can't specify target table 'person_animals' for update in FROM clause
-     *
-     */
     public void deletePeopleWithoutAnimals() {
-        Query query = entityManager.createQuery("DELETE FROM Person p WHERE p.animals IS EMPTY");
-        query.executeUpdate();
+        //On récupère les ids de personne qui n'ont pas d'animaux
+        Query selectQuery = entityManager.createNativeQuery("SELECT p.id FROM person p " +
+                "WHERE p.id NOT IN (SELECT pa.person_id FROM person_animals pa)");
+
+        //Stockés dans cette liste
+        List<Integer> idsToDelete = selectQuery.getResultList();
+
+        if (!idsToDelete.isEmpty()) {
+            //On les supprimes
+            Query deleteQuery = entityManager.createNativeQuery("DELETE FROM person WHERE id IN :ids");
+            deleteQuery.setParameter("ids", idsToDelete);
+            deleteQuery.executeUpdate();
+        }
     }
 
     @Override
