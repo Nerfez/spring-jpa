@@ -17,7 +17,7 @@ import java.util.*;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "fr.iocean.species")
-public class SpeciesApplication implements CommandLineRunner {
+public class BestioleMVC implements CommandLineRunner {
 
     @Autowired
     private AnimalRepository animalRepository;
@@ -29,7 +29,7 @@ public class SpeciesApplication implements CommandLineRunner {
     private SpeciesRepository speciesRepository;
 
     public static void main(String[] args) {
-        SpringApplication.run(SpeciesApplication.class, args);
+        SpringApplication.run(BestioleMVC.class, args);
     }
 
     @Override
