@@ -22,8 +22,9 @@ public class SpeciesController {
      */
     @GetMapping("/species")
     public String listAllSpecies(Model model) {
-    model.addAttribute("listSpecies", speciesRepository.findAll());
-    return "list_species";
+        model.addAttribute("speciesList", speciesRepository.findAll());
+        model.addAttribute("species", new Species());
+        return "list_species";
     }
 
     /**
@@ -47,7 +48,7 @@ public class SpeciesController {
      */
     @GetMapping("/species/create")
     public String getCreateSpeciesTemplate(Model model) {
-        model.addAttribute(new Species());
+        model.addAttribute("species", new Species());
         return "create_species";
     }
 }
