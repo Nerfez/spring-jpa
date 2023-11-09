@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<form th:object="${species}" th:action="@{/species}" method="post">
+<form th:object="${species}" th:action="@{/species}" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" th:field="*{id}" />
     <div>
         <label for="commonName">Nom Commun :</label>

@@ -54,7 +54,7 @@ public class SpeciesController {
     }
 
     @PostMapping("/species")
-    public String createOrUpdate(@RequestBody Species speciesItem) {
+    public String createOrUpdate(@ModelAttribute Species speciesItem) {
         this.speciesRepository.save(speciesItem);
         return "redirect:/species";
     }

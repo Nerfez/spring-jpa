@@ -23,6 +23,10 @@
         <td>
             <a th:href="@{'/species/' + ${speciesItem.id}}" th:text="${speciesItem.latinName}"></a>
         </td>
+        <td>
+            <a th:href="@{'/species/delete/' + ${speciesItem.id}}"
+               onclick="return confirm('Êtes-vous sûr ?')">🗑️</a>
+        </td>
     </tr>
     </tbody>
 </table>
