@@ -36,7 +36,7 @@ public class AnimalController {
     @GetMapping("/animal/{id}")
     public String getOneAnimal(@PathVariable("id") Integer id, Model model) {
         Optional<Animal> animalToSearch = animalRepository.findById(id);
-        model.addAttribute(animalToSearch);
+        model.addAttribute(animalToSearch.get());
         return "update_species";
     }
 

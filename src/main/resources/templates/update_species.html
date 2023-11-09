@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <meta charset="utf-8">
+    <title>Modifier l'Espèce</title>
 </head>
+
 <body>
-<h1>UPDATE SPECIES</h1>
+<form th:object="${species}" th:action="@{/species}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="commonName">Nom Commun :</label>
+        <input type="text" th:field="*{commonName}" id="commonName" />
+    </div>
+    <div>
+        <label for="latinName">Nom latin :</label>
+        <input type="text" th:field="*{latinName}" id="latinName" />
+    </div>
+    <div>
+        <input type="submit" class="button" value="Mettre à jour" />
+        <input type="button" class="button" value="Retour" onclick="window.location='/species'" />
+    </div>
+</form>
+
 </body>
 </html>

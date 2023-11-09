@@ -5,9 +5,9 @@ import fr.iocean.species.repository.SpeciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,7 +22,8 @@ public class SpeciesController {
      */
     @GetMapping("/species")
     public String listAllSpecies(Model model) {
-        model.addAttribute("speciesList", speciesRepository.findAll());
+        List<Species> species = speciesRepository.findAll();
+        model.addAttribute("speciesList", species);
         model.addAttribute("species", new Species());
         return "list_species";
     }
@@ -38,7 +39,7 @@ public class SpeciesController {
     @GetMapping("/species/{id}")
     public String getOneSpecies(@PathVariable("id") Integer id, Model model) {
         Optional<Species> speciesToSearch = speciesRepository.findById(id);
-        model.addAttribute(speciesToSearch);
+        model.addAttribute(speciesToSearch.get());
         return "update_species";
     }
 
@@ -50,5 +51,18 @@ public class SpeciesController {
     public String getCreateSpeciesTemplate(Model model) {
         model.addAttribute("species", new Species());
         return "create_species";
+    }
+
+    @PostMapping("/species")
+    public String createOrUpdate(@RequestBody Species speciesItem) {
+        this.speciesRepository.save(speciesItem);
+        return "redirect:/species";
+    }
+
+    @GetMapping("/species/delete/{id}")
+    public String delete(@PathVariable("id") Integer speciesId) {
+        Optional<Species> speciesToDelete = this.speciesRepository.findById(speciesId);
+        speciesToDelete.ifPresent(species -> this.speciesRepository.delete(species));
+        return "redirect:/species";
     }
 }

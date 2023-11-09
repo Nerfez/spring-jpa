@@ -9,29 +9,28 @@
 <body>
 <table class="mainTable">
     <thead>
-    <!-- … -->
+    <!-- Table header -->
+    <tr>
+        <th>Common Name</th>
+        <th>Latin Name</th>
+    </tr>
     </thead>
     <tbody>
     <tr th:each="speciesItem : ${speciesList}">
-        <td th:text="${speciesItem.commonName}" />
-        <td th:text="${speciesItem.latinName}" />
+        <td>
+            <a th:href="@{'/species/' + ${speciesItem.id}}" th:text="${speciesItem.commonName}"></a>
+        </td>
+        <td>
+            <a th:href="@{'/species/' + ${speciesItem.id}}" th:text="${speciesItem.latinName}"></a>
+        </td>
     </tr>
     </tbody>
 </table>
-<form th:object="${species}" th:action="@{/specie}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <div>
-        <label for="commonName">Nom Commun : </label>
-        <input type="text" th:field="*{commonName}" id="commonName" />
-    </div>
-    <div>
-        <label for="latinName">Nom latin :</label>
-        <input type="text" th:field="*{latinName}" id="latinName" />
-    </div>
-    <div>
-        <input type="submit" class="button" value="Sauver" />
-        <input type="button" class="button" value="Retour" onclick="window.location='/species'" />
-    </div>
-</form>
+
+<div>
+    <button type="button" onclick="window.location='/species'">Retour</button>
+    <button type="button" onclick="window.location='/species/create'">Ajouter une espèce </button>
+</div>
 
 </body>
+</html>

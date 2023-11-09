@@ -36,7 +36,7 @@ public class PersonController {
     @GetMapping("/person/{id}")
     public String getOnePerson(@PathVariable("id") Integer id, Model model) {
         Optional<Person> personToSearch = personRepository.findById(id);
-        model.addAttribute(personToSearch);
+        model.addAttribute(personToSearch.get());
         return "update_person";
     }
 
