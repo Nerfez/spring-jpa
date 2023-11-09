@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <title>Créer un nouvel Animal</title>
+</head>
+
+<body class="container">
+<nav class="sticky-top navbar navbar-expand-lg bg-body-tertiary">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/person">Personne</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/animal">Animal</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/species">Species</a>
+        </li>
+    </ul>
+</nav>
+
+<form th:object="${animal}" th:action="@{/animal}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="color">Couleur :</label>
+        <input type="text" th:field="*{color}" id="color" />
+    </div>
+    <div>
+        <label for="name">Nom :</label>
+        <input type="text" th:field="*{name}" id="name" />
+    </div>
+    <div>
+        <label for="sex">Sexe :</label>
+        <select th:field="*{sex}" id="sex">
+            <option value="M">Mâle</option>
+            <option value="F">Femelle</option>
+        </select>
+    </div>
+    <div>
+        <label for="species">Espèce :</label>
+        <select th:field="*{species.id}" id="species">
+            <option th:each="speciesItem : ${listSpecies}" th:value="${speciesItem.id}" th:text="${speciesItem.commonName + ' (' + speciesItem.latinName + ')'}"></option>
+        </select>
+    </div>
+    <div>
+        <input type="submit" class="button" value="Créer" />
+        <input type="button" class="button" value="Retour" onclick="window.location='/animal'" />
+    </div>
+</form>
+
+</body>
+</html>

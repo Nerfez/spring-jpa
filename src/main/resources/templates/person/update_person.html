@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <title>Modifier la Personne</title>
+</head>
+
+<body class="container">
+<nav class="sticky-top navbar navbar-expand-lg bg-body-tertiary">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="/person">Personne</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/animal">Animal</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/species">Species</a>
+        </li>
+    </ul>
+</nav>
+
+<form th:object="${person}" th:action="@{/person}" method="post">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label for="lastname">Nom :</label>
+        <input type="text" th:field="*{lastname}" id="lastname" />
+    </div>
+    <div>
+        <label for="firstname">Prénom :</label>
+        <input type="text" th:field="*{firstname}" id="firstname" />
+    </div>
+    <div>
+        <label for="age">Âge :</label>
+        <input type="text" th:field="*{age}" id="age" />
+    </div>
+    <div>
+        <input type="submit" class="button" value="Mettre à jour" />
+        <input type="button" class="button" value="Retour" onclick="window.location='/person'" />
+    </div>
+</form>
+
+</body>
+</html>

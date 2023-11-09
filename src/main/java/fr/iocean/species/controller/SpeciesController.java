@@ -2,9 +2,11 @@ package fr.iocean.species.controller;
 
 import fr.iocean.species.model.Species;
 import fr.iocean.species.repository.SpeciesRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +26,7 @@ public class SpeciesController {
     public String listAllSpecies(Model model) {
         List<Species> species = speciesRepository.findAll();
         model.addAttribute("speciesList", species);
-        model.addAttribute("species", new Species());
-        return "list_species";
+        return "species/list_species";
     }
 
     /**
@@ -40,7 +41,7 @@ public class SpeciesController {
     public String getOneSpecies(@PathVariable("id") Integer id, Model model) {
         Optional<Species> speciesToSearch = speciesRepository.findById(id);
         model.addAttribute(speciesToSearch.get());
-        return "update_species";
+        return "species/update_species";
     }
 
     /**
@@ -50,11 +51,14 @@ public class SpeciesController {
     @GetMapping("/species/create")
     public String getCreateSpeciesTemplate(Model model) {
         model.addAttribute("species", new Species());
-        return "create_species";
+        return "species/create_species";
     }
 
     @PostMapping("/species")
-    public String createOrUpdate(@ModelAttribute Species speciesItem) {
+    public String createOrUpdate(@ModelAttribute @Valid Species speciesItem, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "species/create_species";
+        }
         this.speciesRepository.save(speciesItem);
         return "redirect:/species";
     }

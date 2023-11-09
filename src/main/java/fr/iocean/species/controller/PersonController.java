@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Optional;
 
@@ -22,7 +24,7 @@ public class PersonController {
     @GetMapping("/person")
     public String listAllPerson(Model model) {
         model.addAttribute("listPerson", personRepository.findAll());
-        return "list_person";
+        return "person/list_person";
     }
 
     /**
@@ -37,7 +39,7 @@ public class PersonController {
     public String getOnePerson(@PathVariable("id") Integer id, Model model) {
         Optional<Person> personToSearch = personRepository.findById(id);
         model.addAttribute(personToSearch.get());
-        return "update_person";
+        return "person/update_person";
     }
 
     /**
@@ -46,7 +48,20 @@ public class PersonController {
      */
     @GetMapping("/person/create")
     public String getCreatePersonTemplate(Model model) {
-        model.addAttribute(new Person());
-        return "create_person";
+        model.addAttribute("person", new Person());
+        return "person/create_person";
+    }
+
+    @PostMapping("/person")
+    public String createOrUpdate(@ModelAttribute Person personItem) {
+        this.personRepository.save(personItem);
+        return "redirect:/person";
+    }
+
+    @GetMapping("/person/delete/{id}")
+    public String delete(@PathVariable("id") Integer personId) {
+        Optional<Person> personIdToDelete = this.personRepository.findById(personId);
+        personIdToDelete.ifPresent(person -> this.personRepository.delete(person));
+        return "redirect:/person";
     }
 }

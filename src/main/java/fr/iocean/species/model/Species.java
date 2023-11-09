@@ -1,5 +1,8 @@
 package fr.iocean.species.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 @Entity
@@ -9,9 +12,13 @@ public class Species {
     private int id;
 
     @Column(name = "common_name")
+    @NotBlank
+    @Size(max = 50)
     private String commonName;
 
     @Column(name = "latin_name")
+    @NotBlank
+    @Size(max = 200)
     private String latinName;
 
     public Species(String commonName, String latinName) {
