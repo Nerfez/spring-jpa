@@ -72,6 +72,18 @@ public class PersonController {
     }
 
     /**
+     * supprime les personnes sans animaux
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/person/deleteWithoutAnimal")
+    public String getDeletePersonWithoutAnimalTemplate(Model model) {
+        personRepository.deletePeopleWithoutAnimals();
+        return "redirect:/person";
+    }
+
+    /**
      * créer / modifie la personne
      *
      * @param personItem
