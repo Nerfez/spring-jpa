@@ -1,7 +1,6 @@
 package fr.iocean.species.controller;
 
 import fr.iocean.species.model.Animal;
-import fr.iocean.species.model.Person;
 import fr.iocean.species.repository.AnimalRepository;
 import fr.iocean.species.repository.SpeciesRepository;
 import jakarta.validation.Valid;
@@ -25,6 +24,7 @@ public class AnimalController {
     private SpeciesRepository speciesRepository;
 
     /**
+     * recupere la liste des animaux
      * @param model
      * @return
      */
@@ -35,9 +35,7 @@ public class AnimalController {
     }
 
     /**
-     * Retourner une vue qui va afficher un animal donné en fonction de l'id en paramètre
-     * afin qu'on puisse la modifier via un formulaire sur le template
-     *
+     * recupere l animal
      * @param id
      * @param model
      * @return
@@ -51,6 +49,7 @@ public class AnimalController {
     }
 
     /**
+     * creer un nouvel animal ET une liste des especes
      * @param model
      * @return
      */
@@ -61,6 +60,14 @@ public class AnimalController {
         return "animal/create_animal";
     }
 
+    /**
+     * creer ou modifie l animal recupere
+     *
+     * @param animalItem
+     * @param bindingResult
+     * @param model
+     * @return
+     */
     @PostMapping("/animal")
     public String createOrUpdate(@ModelAttribute @Valid Animal animalItem, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
@@ -71,6 +78,12 @@ public class AnimalController {
         return "redirect:/animal";
     }
 
+    /**
+     * supprime l animal recupere
+     *
+     * @param animalId
+     * @return
+     */
     @GetMapping("/animal/delete/{id}")
     public String delete(@PathVariable("id") Integer animalId) {
         Optional<Animal> animalToDelete = this.animalRepository.findById(animalId);

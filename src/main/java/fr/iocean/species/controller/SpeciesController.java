@@ -19,6 +19,8 @@ public class SpeciesController {
     private SpeciesRepository speciesRepository;
 
     /**
+     * recupere la liste des especes
+     *
      * @param model
      * @return
      */
@@ -30,8 +32,7 @@ public class SpeciesController {
     }
 
     /**
-     * Retourner une vue qui va afficher une species donnée en fonction de l'id en paramètre
-     * afin qu'on puisse la modifier via un formulaire sur le template
+     * recupere l espece
      *
      * @param id
      * @param model
@@ -45,6 +46,8 @@ public class SpeciesController {
     }
 
     /**
+     * creer une nouvelle espece vide
+     *
      * @param model
      * @return
      */
@@ -54,6 +57,13 @@ public class SpeciesController {
         return "species/create_species";
     }
 
+    /**
+     * creer ou modifie l espece recupere
+     *
+     * @param speciesItem
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/species")
     public String createOrUpdate(@ModelAttribute @Valid Species speciesItem, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -63,6 +73,12 @@ public class SpeciesController {
         return "redirect:/species";
     }
 
+    /**
+     * supprime l espece recupere
+     *
+     * @param speciesId
+     * @return
+     */
     @GetMapping("/species/delete/{id}")
     public String delete(@PathVariable("id") Integer speciesId) {
         Optional<Species> speciesToDelete = this.speciesRepository.findById(speciesId);

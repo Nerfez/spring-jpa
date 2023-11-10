@@ -1,7 +1,6 @@
 package fr.iocean.species.controller;
 
 import fr.iocean.species.model.Person;
-import fr.iocean.species.model.Species;
 import fr.iocean.species.repository.PersonRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,8 @@ public class PersonController {
     private PersonRepository personRepository;
 
     /**
+     * Récupère ma liste des personnes
+     *
      * @param model
      * @return
      */
@@ -31,8 +32,7 @@ public class PersonController {
     }
 
     /**
-     * Retourner une vue qui va afficher une person donnée en fonction de l'id en paramètre
-     * afin qu'on puisse la modifier via un formulaire sur le template
+     * Récupère la personne reçu
      *
      * @param id
      * @param model
@@ -46,6 +46,8 @@ public class PersonController {
     }
 
     /**
+     * Récupère un nouvel objet personne vide (age est initialisé et instancié à 0 sinon la vue plante)
+     *
      * @param model
      * @return
      */
@@ -57,6 +59,25 @@ public class PersonController {
         return "person/create_person";
     }
 
+    /**
+     * récupère 5 nouvelles personnes générées aléatoirement
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/person/generate")
+    public String getGeneratePersonTemplate(Model model) {
+        personRepository.generateRandomEntities(5);
+        return "redirect:/person";
+    }
+
+    /**
+     * créer / modifie la personne
+     *
+     * @param personItem
+     * @param bindingResult
+     * @return
+     */
     @PostMapping("/person")
     public String createOrUpdate(@ModelAttribute @Valid Person personItem, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
@@ -66,6 +87,12 @@ public class PersonController {
         return "redirect:/person";
     }
 
+    /**
+     * supprime la personne récupérée
+     *
+     * @param personId
+     * @return
+     */
     @GetMapping("/person/delete/{id}")
     public String delete(@PathVariable("id") Integer personId) {
         Optional<Person> personIdToDelete = this.personRepository.findById(personId);
