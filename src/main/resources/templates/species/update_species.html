@@ -7,6 +7,7 @@
 </head>
 
 <body class="container">
+
 <nav class="sticky-top navbar navbar-expand-lg bg-body-tertiary">
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -26,10 +27,12 @@
     <div>
         <label for="commonName">Nom Commun :</label>
         <input type="text" th:field="*{commonName}" id="commonName" />
+        <span th:if="${#fields.hasErrors('commonName')}" th:errors="*{commonName}">Error</span>
     </div>
     <div>
         <label for="latinName">Nom latin :</label>
         <input type="text" th:field="*{latinName}" id="latinName" />
+        <span th:if="${#fields.hasErrors('latinName')}" th:errors="*{latinName}">Error</span>
     </div>
     <div>
         <input type="submit" class="button" value="Mettre à jour" />

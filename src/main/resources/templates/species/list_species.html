@@ -7,6 +7,7 @@
 </head>
 
 <body class="container">
+
 <nav class="sticky-top navbar navbar-expand-lg bg-body-tertiary">
     <ul class="navbar-nav">
         <li class="nav-item">
@@ -37,8 +38,8 @@
         <td th:text="${speciesItem.id}"/>
         <td th:text="${speciesItem.commonName}"/>
         <td th:text="${speciesItem.latinName}"/>
-        <td><a class="text-warning" th:href="@{'/species/' + ${speciesItem.id}}">Update</a></td>
-        <td><a class="text-danger" th:href="@{'/species/delete/' + ${speciesItem.id}} "onclick="return confirm('Êtes-vous sûr ?')">Delete</a></td>
+        <td><a class="text-warning" th:href="@{'/species/' + ${speciesItem.id}}">Mettre à jour</a></td>
+        <td><a class="text-danger" th:href="@{'/species/delete/' + ${speciesItem.id}} "onclick="return confirm('Êtes-vous sûr ?')">Supprimer</a></td>
     </tr>
     </tbody>
 </table>

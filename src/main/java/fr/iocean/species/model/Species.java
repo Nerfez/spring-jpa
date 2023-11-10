@@ -1,6 +1,7 @@
 package fr.iocean.species.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class Species {
 
     public Species(){}
 
+    @NotNull
     @OneToMany(mappedBy = "species")
     private List<Animal> animals;
 

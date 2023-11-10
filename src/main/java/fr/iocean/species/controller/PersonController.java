@@ -1,10 +1,13 @@
 package fr.iocean.species.controller;
 
 import fr.iocean.species.model.Person;
+import fr.iocean.species.model.Species;
 import fr.iocean.species.repository.PersonRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,12 +51,17 @@ public class PersonController {
      */
     @GetMapping("/person/create")
     public String getCreatePersonTemplate(Model model) {
-        model.addAttribute("person", new Person());
+        Person newPerson = new Person();
+        newPerson.setAge(0);
+        model.addAttribute("person", newPerson);
         return "person/create_person";
     }
 
     @PostMapping("/person")
-    public String createOrUpdate(@ModelAttribute Person personItem) {
+    public String createOrUpdate(@ModelAttribute @Valid Person personItem, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return personItem.getId() == 0 ? "person/create_person" : "person/update_person";
+        }
         this.personRepository.save(personItem);
         return "redirect:/person";
     }

@@ -1,11 +1,14 @@
 package fr.iocean.species.controller;
 
 import fr.iocean.species.model.Animal;
+import fr.iocean.species.model.Person;
 import fr.iocean.species.repository.AnimalRepository;
 import fr.iocean.species.repository.SpeciesRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,7 +62,11 @@ public class AnimalController {
     }
 
     @PostMapping("/animal")
-    public String createOrUpdate(@ModelAttribute Animal animalItem) {
+    public String createOrUpdate(@ModelAttribute @Valid Animal animalItem, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("listSpecies", speciesRepository.findAll());
+            return animalItem.getId() == 0 ? "animal/create_animal" : "animal/update_animal";
+        }
         this.animalRepository.save(animalItem);
         return "redirect:/animal";
     }

@@ -1,6 +1,8 @@
 package fr.iocean.species.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -13,9 +15,13 @@ public class Person {
     @Column(name = "age")
     private Integer age;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "firstname")
     private String firstname;
 
+    @NotBlank
+    @Size(max = 50)
     @Column(name = "lastname")
     private String lastname;
 
@@ -44,7 +50,11 @@ public class Person {
 
     public Person(){}
 
-    public int getId() {
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Integer getId() {
         return id;
     }
 

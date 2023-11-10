@@ -2,6 +2,8 @@ package fr.iocean.species.model;
 import fr.iocean.species.enums.Sex;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.List;
 
 @Entity
@@ -12,6 +14,8 @@ public class Animal {
 
     @Column(name = "color")
     private String color;
+
+    @NotBlank
     @Column(name = "name")
     private String name;
 

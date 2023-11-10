@@ -57,7 +57,7 @@ public class SpeciesController {
     @PostMapping("/species")
     public String createOrUpdate(@ModelAttribute @Valid Species speciesItem, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "species/create_species";
+            return speciesItem.getId() == 0 ? "species/create_species" : "species/update_species";
         }
         this.speciesRepository.save(speciesItem);
         return "redirect:/species";
