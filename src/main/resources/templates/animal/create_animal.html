@@ -11,10 +11,10 @@
 <nav class="sticky-top navbar navbar-expand-lg bg-body-tertiary">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link active" href="/person">Personne</a>
+            <a class="nav-link mr-2" href="/person">Personne</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/animal">Animal</a>
+            <a class="nav-link active mr-2" href="/animal">Animal</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/species">Species</a>
@@ -24,34 +24,40 @@
 
 <form th:object="${animal}" th:action="@{/animal}" method="post">
     <input type="hidden" th:field="*{id}" />
-    <div>
-        <label for="color">Couleur :</label>
-        <input type="text" th:field="*{color}" id="color" />
+
+    <div class="mb-3">
+        <label for="color" class="form-label">Couleur :</label>
+        <input type="text" th:field="*{color}" id="color" class="form-control" />
     </div>
-    <div>
-        <label for="name">Nom :</label>
-        <input type="text" th:field="*{name}" id="name" />
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</span>
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Nom :</label>
+        <input type="text" th:field="*{name}" id="name" class="form-control" />
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Error</span>
     </div>
-    <div>
-        <label for="sex">Sexe :</label>
-        <select th:field="*{sex}" id="sex">
+
+    <div class="mb-3">
+        <label for="sex" class="form-label">Sexe :</label>
+        <select th:field="*{sex}" id="sex" class="form-control">
             <option value="M">Mâle</option>
             <option value="F">Femelle</option>
         </select>
     </div>
-    <div>
-        <label for="species">Espèce :</label>
-        <select th:field="*{species.id}" id="species">
+
+    <div class="mb-3">
+        <label for="species" class="form-label">Espèce :</label>
+        <select th:field="*{species.id}" id="species" class="form-control">
             <option th:each="speciesItem : ${listSpecies}" th:value="${speciesItem.id}" th:text="${speciesItem.commonName + ' (' + speciesItem.latinName + ')'}"></option>
         </select>
-        <span th:if="${#fields.hasErrors('species')}" th:errors="*{species}">Error</span>
+        <span th:if="${#fields.hasErrors('species')}" th:errors="*{species}" class="text-danger">Error</span>
     </div>
-    <div>
-        <input type="submit" class="button" value="Créer" />
-        <input type="button" class="button" value="Retour" onclick="window.location='/animal'" />
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-outline-success">Créer</button>
+        <button type="button" class="btn btn-outline-dark" onclick="window.location='/animal'">Retour</button>
     </div>
 </form>
+
 
 </body>
 </html>
