@@ -1,4 +1,5 @@
 package fr.iocean.species.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.iocean.species.enums.Sex;
 
 import jakarta.persistence.*;
@@ -33,6 +34,7 @@ public class Animal {
             joinColumns = @JoinColumn(name = "animals_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id")
     )
+    @JsonIgnore
     private List<Person> owner;
 
     public Animal(String couleur, String nom, Sex sexe, Species species) {

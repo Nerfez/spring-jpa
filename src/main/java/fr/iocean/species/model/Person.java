@@ -1,5 +1,6 @@
 package fr.iocean.species.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -31,6 +32,7 @@ public class Person {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "animals_id")
     )
+    @JsonIgnore
     private List<Animal> animals;
 
 

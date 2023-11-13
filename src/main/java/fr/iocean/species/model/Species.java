@@ -1,4 +1,5 @@
 package fr.iocean.species.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +32,7 @@ public class Species {
 
     @NotNull
     @OneToMany(mappedBy = "species")
+    @JsonIgnore
     private List<Animal> animals;
 
     public List<Animal> getAnimals() {
