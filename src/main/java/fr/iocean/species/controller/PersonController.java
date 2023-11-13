@@ -6,6 +6,7 @@ import fr.iocean.species.model.Person;
 import fr.iocean.species.services.PersonService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +29,21 @@ public class PersonController {
     }
 
     @PostMapping
-    public Person createPerson(@RequestBody @Valid Person personToCreate) {
-        return this.personService.create(personToCreate);
+    public void createPerson(@RequestBody @Valid Person personToCreate) {
+        if(personToCreate.getId() != null) {
+            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+        }
+         else {
+             this.personService.create(personToCreate);
+        }
     }
     @PutMapping
-    public Person updatePerson(@RequestBody @Valid Person updatedPerson) {
-        return this.personService.update(updatedPerson);
+    public void updatePerson(@RequestBody @Valid Person updatedPerson) {
+        if(updatedPerson.getId() != null) {
+            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+        } else {
+            this.personService.update(updatedPerson);
+        }
     }
 
     @DeleteMapping("/{id}")

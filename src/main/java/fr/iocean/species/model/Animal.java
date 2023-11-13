@@ -62,7 +62,7 @@ public class Animal {
         this.sex = sex;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

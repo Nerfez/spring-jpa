@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +29,23 @@ public class SpeciesController {
     }
 
     @PostMapping
-    public Species createPerson(@RequestBody @Valid Species speciesToCreate) {
-        return this.speciesService.create(speciesToCreate);
+    public void createPerson(@RequestBody @Valid Species speciesToCreate) {
+        if(speciesToCreate.getId() != null) {
+            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+        }
+        else {
+            this.speciesService.create(speciesToCreate);
+        }
     }
+
     @PutMapping
-    public Species updatePerson(@RequestBody @Valid Species updatedSpecies) {
-        return this.speciesService.update(updatedSpecies);
+    public void updatePerson(@RequestBody @Valid Species updatedSpecies) {
+        if(updatedSpecies.getId() != null) {
+            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+        }
+        else {
+            this.speciesService.update(updatedSpecies);
+        }
     }
 
     @DeleteMapping("/{id}")

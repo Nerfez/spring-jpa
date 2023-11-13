@@ -43,7 +43,7 @@ public class Species {
         this.animals = animals;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
