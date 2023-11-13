@@ -4,6 +4,8 @@ import fr.iocean.species.model.Animal;
 import fr.iocean.species.services.AnimalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +40,11 @@ public class AnimalController {
     public void delete(@PathVariable("id") final Integer id) {
         final Animal animal = animalService.findById(id);
         animalService.delete(animal);
+    }
+
+    @GetMapping("/pages")
+    public Page<Animal> findAllPages(Pageable pageable) {
+        return animalService.findAllPages(pageable);
     }
 
 }

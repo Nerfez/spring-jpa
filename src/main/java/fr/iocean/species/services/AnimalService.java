@@ -4,6 +4,8 @@ import fr.iocean.species.model.Animal;
 import fr.iocean.species.repository.AnimalRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,5 +34,9 @@ public class AnimalService {
 
     public void delete(@Valid Animal deletedAnimal) {
         this.animalRepository.delete(deletedAnimal);
+    }
+
+    public Page<Animal> findAllPages(Pageable pageable) {
+        return this.animalRepository.findAll(pageable);
     }
 }

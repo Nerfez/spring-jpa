@@ -1,6 +1,7 @@
 package fr.iocean.species.controller;
 
-import fr.iocean.species.model.Animal;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import fr.iocean.species.model.Person;
 import fr.iocean.species.services.PersonService;
 import jakarta.validation.Valid;
@@ -39,5 +40,10 @@ public class PersonController {
     public void delete(@PathVariable("id") final Integer id) {
         final Person person = personService.findById(id);
         personService.delete(person);
+    }
+
+    @GetMapping("/pages")
+    public Page<Person> findAllPages(Pageable pageable) {
+        return personService.findAllPages(pageable);
     }
 }

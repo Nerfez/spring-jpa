@@ -5,6 +5,8 @@ import fr.iocean.species.repository.SpeciesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,4 +36,7 @@ public class SpeciesService {
         this.speciesRepository.delete(deletedSpecies);
     }
 
+    public Page<Species> findAllPages(Pageable pageable) {
+        return this.speciesRepository.findAll(pageable);
+    }
 }

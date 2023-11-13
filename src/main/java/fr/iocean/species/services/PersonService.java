@@ -4,6 +4,8 @@ import fr.iocean.species.model.Person;
 import fr.iocean.species.repository.PersonRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -32,5 +34,9 @@ public class PersonService {
 
     public void delete(@Valid Person deletedPerson) {
         this.personRepository.delete(deletedPerson);
+    }
+
+    public Page<Person> findAllPages(Pageable pageable) {
+        return this.personRepository.findAll(pageable);
     }
 }
