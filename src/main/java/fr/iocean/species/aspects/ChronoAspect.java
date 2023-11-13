@@ -27,7 +27,7 @@ public class ChronoAspect {
         } finally {
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime;
-            logger.info("Temps écoulé : " + joinPoint.getSignature().toShortString() + " " + duration + " ms");
+            logger.info("Temps écoulé de la méthode : " + joinPoint.getSignature().toShortString() + " en " + duration + " ms");
         }
     }
 }

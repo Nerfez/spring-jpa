@@ -17,7 +17,7 @@ public class LogMethodAspect {
 
     //tout cibler     @Pointcut("execution(* *.*(..))") plusieurs erreurs Cannot invoke "org.apache.commons.logging.Log.isDebugEnabled()" because "this.logger" is null
     //cibler le package @Pointcut("execution(* fr.iocean.species..*Controller.get*(..))")
-    @Pointcut("execution(* fr.iocean.species..*Controller.get*(..))")
+    @Pointcut("execution(* fr.iocean.species..*.*(..))")
     public void getMethods() {
     }
 
