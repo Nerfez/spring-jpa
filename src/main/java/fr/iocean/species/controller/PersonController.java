@@ -29,20 +29,22 @@ public class PersonController {
     }
 
     @PostMapping
-    public void createPerson(@RequestBody @Valid Person personToCreate) {
+    public String createPerson(@RequestBody @Valid Person personToCreate) {
         if(personToCreate.getId() != null) {
-            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+            this.personService.create(personToCreate);
+            return ("Personne créée " + HttpStatus.OK);
         }
          else {
-             this.personService.create(personToCreate);
+            return ("Id non renseigné " + HttpStatus.BAD_REQUEST);
         }
     }
     @PutMapping
-    public void updatePerson(@RequestBody @Valid Person updatedPerson) {
+    public String updatePerson(@RequestBody @Valid Person updatedPerson) {
         if(updatedPerson.getId() != null) {
-            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
-        } else {
             this.personService.update(updatedPerson);
+            return ("Personne modifiée " + HttpStatus.OK);
+        } else {
+            return ("Id non renseigné " + HttpStatus.BAD_REQUEST);
         }
     }
 

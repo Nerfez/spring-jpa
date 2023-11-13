@@ -24,27 +24,29 @@ public class SpeciesController {
     }
 
     @GetMapping("/{id}")
-    public Species getPersonById(@PathVariable("id") Integer id) {
+    public Species getSpeciesById(@PathVariable("id") Integer id) {
         return speciesService.findById(id);
     }
 
     @PostMapping
-    public void createPerson(@RequestBody @Valid Species speciesToCreate) {
+    public String createSpecies(@RequestBody @Valid Species speciesToCreate) {
         if(speciesToCreate.getId() != null) {
-            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+            this.speciesService.create(speciesToCreate);
+            return ("Species créée " + HttpStatus.OK);
         }
         else {
-            this.speciesService.create(speciesToCreate);
+            return ("Id non renseigné " + HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping
-    public void updatePerson(@RequestBody @Valid Species updatedSpecies) {
+    public String updateSpecies(@RequestBody @Valid Species updatedSpecies) {
         if(updatedSpecies.getId() != null) {
-            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+            this.speciesService.update(updatedSpecies);
+            return ("Species modifiée " + HttpStatus.OK);
         }
         else {
-            this.speciesService.update(updatedSpecies);
+            return ("Id non renseigné " + HttpStatus.BAD_REQUEST);
         }
     }
 

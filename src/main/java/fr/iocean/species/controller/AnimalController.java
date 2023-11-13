@@ -24,26 +24,28 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public Animal getPersonById(@PathVariable("id") Integer id) {
+    public Animal getAnimalById(@PathVariable("id") Integer id) {
         return animalService.findById(id);
     }
 
     @PostMapping
-    public void createPerson(@RequestBody @Valid Animal animalToCreate) {
+    public String createAnimal(@RequestBody @Valid Animal animalToCreate) {
         if(animalToCreate.getId() != null) {
-            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+            this.animalService.create(animalToCreate);
+            return ("Animal créé " + HttpStatus.OK);
         }
         else {
-            this.animalService.create(animalToCreate);
+            return ("Id non renseigné " + HttpStatus.BAD_REQUEST);
         }
     }
     @PutMapping
-    public void updatePerson(@RequestBody @Valid Animal updatedAnimal) {
+    public String updateAnimal(@RequestBody @Valid Animal updatedAnimal) {
         if(updatedAnimal.getId() != null) {
-            System.out.println("Id non renseigné " + HttpStatus.BAD_REQUEST);
+            this.animalService.create(updatedAnimal);
+            return ("Animal modifié " + HttpStatus.OK);
         }
         else {
-            this.animalService.create(updatedAnimal);
+            return ("Id non renseigné " + HttpStatus.BAD_REQUEST);
         }
     }
 
