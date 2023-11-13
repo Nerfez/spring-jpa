@@ -12,7 +12,7 @@ public class ChronoAspect {
 
     private final Logger logger = LoggerFactory.getLogger(ChronoAspect.class);
 
-    @Pointcut("execution(* fr.iocean.species.services..*.*(..)) || execution(* fr.iocean.species.repository..*.*(..))")
+    @Pointcut("execution(* fr.iocean.species.services..*.*(..))")
     public void serviceMethods() {
     }
 

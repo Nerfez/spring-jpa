@@ -12,7 +12,7 @@ public class ExceptionAspect {
 
     private final Logger logger = LoggerFactory.getLogger(ExceptionAspect.class);
 
-    @Pointcut("execution(* fr.iocean.species.services..*.*(..)) || execution(* fr.iocean.species.repository..*.*(..))")
+    @Pointcut("execution(* fr.iocean.species.services..*.*(..))")
     public void serviceMethods() {
     }
 
