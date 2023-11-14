@@ -1,5 +1,6 @@
 package fr.iocean.species.controller;
 
+import fr.iocean.species.dto.PersonDto;
 import fr.iocean.species.model.Animal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,7 @@ public class PersonController {
     PersonService personService;
 
     @GetMapping
-    public List<Person> findAll(){
+    public List<PersonDto> findAll(){
         return personService.findAll();
     }
 

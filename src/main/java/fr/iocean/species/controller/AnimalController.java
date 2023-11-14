@@ -1,5 +1,6 @@
 package fr.iocean.species.controller;
 
+import fr.iocean.species.dto.AnimalDto;
 import fr.iocean.species.model.Animal;
 import fr.iocean.species.services.AnimalService;
 import jakarta.validation.Valid;
@@ -20,7 +21,7 @@ public class AnimalController {
     private AnimalService animalService;
 
     @GetMapping
-    public List<Animal> findAll(){
+    public List<AnimalDto> findAll(){
         return animalService.findAll();
     }
 

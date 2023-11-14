@@ -1,6 +1,8 @@
 package fr.iocean.species.services;
 
 import fr.iocean.species.advices.ControllerExceptionHandler;
+import fr.iocean.species.dto.AnimalDto;
+import fr.iocean.species.mappers.AnimalMapper;
 import fr.iocean.species.model.Animal;
 import fr.iocean.species.repository.AnimalRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnimalService {
@@ -19,9 +22,17 @@ public class AnimalService {
     @Autowired
     private AnimalRepository animalRepository;
 
-    public List<Animal> findAll() {
+    /**public List<Animal> findAll() {
         return this.animalRepository.findAll();
+    }**/
+
+    public List<AnimalDto> findAll() {
+        List<Animal> persons = animalRepository.findAll();
+        return persons.stream()
+                .map(AnimalMapper::toDto)
+                .collect(Collectors.toList());
     }
+
     public Animal findById(Integer id) {
         return this.animalRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
