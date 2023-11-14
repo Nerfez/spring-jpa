@@ -5,6 +5,7 @@ import fr.iocean.species.services.AnimalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +57,8 @@ public class AnimalController {
     }
 
     @GetMapping("/pages")
-    public Page<Animal> findAllPages(Pageable pageable) {
+    public Page<Animal> findAllPages(@RequestParam(defaultValue = "0") Integer pageNumber, @RequestParam(defaultValue = "20") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return animalService.findAllPages(pageable);
     }
 

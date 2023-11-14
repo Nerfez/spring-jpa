@@ -1,6 +1,8 @@
 package fr.iocean.species.controller;
 
+import fr.iocean.species.model.Animal;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import fr.iocean.species.model.Person;
 import fr.iocean.species.services.PersonService;
@@ -55,7 +57,8 @@ public class PersonController {
     }
 
     @GetMapping("/pages")
-    public Page<Person> findAllPages(Pageable pageable) {
+    public Page<Person> findAllPages(@RequestParam(defaultValue = "0") Integer pageNumber, @RequestParam(defaultValue = "20") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return personService.findAllPages(pageable);
     }
 }

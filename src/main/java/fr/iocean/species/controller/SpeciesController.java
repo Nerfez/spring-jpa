@@ -1,10 +1,12 @@
 package fr.iocean.species.controller;
 
+import fr.iocean.species.model.Person;
 import fr.iocean.species.model.Species;
 import fr.iocean.species.services.SpeciesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +59,9 @@ public class SpeciesController {
     }
 
     @GetMapping("/pages")
-    public Page<Species> findAllPages(Pageable pageable) {
+    public Page<Species> findAllPages(@RequestParam(defaultValue = "0") Integer pageNumber, @RequestParam(defaultValue = "20") Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return speciesService.findAllPages(pageable);
     }
+
 }
