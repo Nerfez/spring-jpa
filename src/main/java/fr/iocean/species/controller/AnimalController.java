@@ -42,7 +42,7 @@ public class AnimalController {
     @PutMapping
     public String updateAnimal(@RequestBody @Valid Animal updatedAnimal) {
         if(updatedAnimal.getId() != null) {
-            this.animalService.create(updatedAnimal);
+            this.animalService.update(updatedAnimal);
             return ("Animal modifié " + HttpStatus.OK);
         }
         else {
